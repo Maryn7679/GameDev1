@@ -11,50 +11,129 @@ uint32_t to_bytes(float const value)
     return *(reinterpret_cast<uint32_t const*>(&value));// C++ implementation
 }
 
+uint64_t to_bytes(double const value)
+{
+    return *(reinterpret_cast<uint64_t const*>(&value));// C++ implementation
+}
+
 float to_float(uint32_t const value)
 {
     return *(reinterpret_cast<float const*>(&value));   // C++ implementation
 }
 
+double to_double(uint64_t const value)
+{
+    return *(reinterpret_cast<double const*>(&value));   // C++ implementation
+}
+
 bool is_finite(float const value)
 {
-    std::bitset<32> bit_value(to_bytes(value));
+    uint32_t bit_value(to_bytes(value));
 
-    if (std::bitset<32>(bit_value | std::bitset<32>(0b10000000'01111111'11111111'11111111)).all()) {
-
-        if (bit_value[0] &&
-            std::bitset<32>(bit_value & std::bitset<32>(0b00000000'01111111'11111111'11111111)).any()) {
+    if (!~(bit_value | 0b10000000'01111111'11111111'11111111)) {
+        if (bit_value >> 31 && (bit_value & 0b00000000'01111111'11111111'11111111)) {
             return true;
         }
         else return false;
-
     }
     else return true;
 }
 
 bool is_inf(float const value)
 {
-    std::bitset<32> bit_value(to_bytes(value));
-    bit_value[0] = false;
+    uint32_t bit_value(to_bytes(value));
+    bit_value <<= 1;
 
-    if (bit_value == std::bitset<32>(0b01111111'10000000'00000000'00000000)) {
+    if (bit_value == 0b11111111'00000000'00000000'00000000) {
 
         return true;
+    }
+    else return false;
+}
 
+bool is_pos_inf(float const value)
+{
+    uint32_t bit_value(to_bytes(value));
+
+    if (bit_value == 0b01111111'10000000'00000000'00000000) {
+
+        return true;
+    }
+    else return false;
+}
+
+bool is_neg_inf(float const value)
+{
+    uint32_t bit_value(to_bytes(value));
+
+    if (bit_value == 0b11111111'10000000'00000000'00000000) {
+
+        return true;
+    }
+    else return false;
+}
+
+bool is_zero(float const value)
+{
+    uint32_t bit_value(to_bytes(value));
+    bit_value <<= 1;
+
+    if (bit_value == 0b00000000'00000000'00000000'00000000) {
+
+        return true;
+    }
+    else return false;
+}
+
+bool is_pos_zero(float const value)
+{
+    uint32_t bit_value(to_bytes(value));
+
+    if (bit_value == 0b00000000'00000000'00000000'00000000) {
+
+        return true;
+    }
+    else return false;
+}
+
+bool is_neg_zero(float const value)
+{
+    uint32_t bit_value(to_bytes(value));
+
+    if (bit_value == 0b10000000'00000000'00000000'00000000) {
+
+        return true;
+    }
+    else return false;
+}
+
+bool is_nan(float const value)
+{
+    uint32_t bit_value(to_bytes(value));
+
+    if (bit_value >> 23 == 0b00000000'00000000'00000000'11111111) {
+
+        if (bit_value << 9) {
+            return true;
+        }
+        else return false;
     }
     else return false;
 }
 
 int main()
 {
-    std::cout << std::bitset<32>(to_bytes(std::numeric_limits<float>::infinity()))
-        << std::endl;
+    //std::cout << std::bitset<32>(to_bytes(std::numeric_limits<double>::max()))
+    //    << std::endl;
 
     //std::bitset<32> bit_value(~to_bytes(42.F));
+    //std::numeric_limits<float>::infinity()
+    //std::numeric_limits<double>::quiet_NaN()
+    //std::numeric_limits<double>::max()
    
     //std::cout << typeid(~bit_value &= 0b01111111'10000000'00000000'00000000).name() << std::endl;
-    std::cout << is_inf(std::numeric_limits<float>::infinity()) << std::endl;
-    std::cout << isinf(std::numeric_limits<float>::infinity()) << std::endl;
+    std::cout << is_finite(0.0) << std::endl;
+    std::cout << is_nan(std::numeric_limits<double>::max()) << std::endl;
 
 }
 
