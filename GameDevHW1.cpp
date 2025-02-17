@@ -328,24 +328,67 @@ auto classify(double const value)
     else return "unknown";
 }
 
+float absolute(float value) {
+    uint32_t bit_value(to_bytes(value));
+    (bit_value <<= 1) >>= 1;
+    return to_float(bit_value);
+}
+
+double absolute(double value) {
+    uint64_t bit_value(to_bytes(value));
+    (bit_value <<= 1) >>= 1;
+    return to_double(bit_value);
+}
+
+bool is_greater_than(float a, float b) 
+{
+    if (is_nan(a) || is_nan(b)) { return false; }
+
+    if (is_signed(a) && !is_signed(b)) { return b; }
+    if (!is_signed(a) && is_signed(b)) { return a; }
+    bool sign = is_signed(a);
+
+    a = absolute(a);
+    b = absolute(b);
+    uint32_t bit_a(to_bytes(a));
+    uint32_t bit_b(to_bytes(b));
+
+    uint32_t mask;
+
+    for (mask = 1 << 31; mask != 0; mask >>= 1) {
+
+        if ((bit_a & mask) == (bit_b & mask)) {
+            continue;
+        }
+        else {
+            if ((bit_a & mask) && !sign) {
+                return true;
+            }
+            return false;
+        }
+    }
+    return true;
+}
 
 int main()
 {
-    //std::cout << std::bitset<32>(to_bytes(std::numeric_limits<double>::max()))
+    //std::cout << std::bitset<32>(to_bytes(std::numeric_limits<float>::min()))
     //    << std::endl;
+    std::cout << std::max(NAN, 1.F) << std::endl;
 
     //std::bitset<32> bit_value(~to_bytes(42.F));
     //std::numeric_limits<float>::infinity()
     //std::numeric_limits<double>::quiet_NaN()
     //std::numeric_limits<double>::max()
-   
+    
     //std::cout << typeid(~bit_value &= 0b01111111'10000000'00000000'00000000).name() << std::endl;
-    std::cout << classify(1.0) << std::endl;
-    std::cout << classify(std::numeric_limits<double>::quiet_NaN()) << std::endl;
-    std::cout << classify(std::numeric_limits<double>::infinity()) << std::endl;
-    std::cout << classify(0.0) << std::endl;
-    std::cout << classify(std::numeric_limits<double>::min() / 2.0) << std::endl;
-    std::cout << classify(std::numeric_limits<double>::max()) << std::endl;
+
+    //std::cout << classify(1.0) << std::endl;
+    std::cout << is_greater_than(0.F, NAN) << std::endl;
+    //std::cout << absolute(std::numeric_limits<double>::infinity()) << std::endl;
+    //std::cout << absolute(0.0) << std::endl;
+    //std::cout << absolute(std::numeric_limits<double>::min() / 2.0) << std::endl;
+    //std::cout << absolute(std::numeric_limits<double>::max()) << std::endl;
 
 }
 
