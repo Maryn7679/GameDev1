@@ -121,6 +121,61 @@ bool is_nan(float const value)
     else return false;
 }
 
+bool is_normal(float const value)
+{
+    uint32_t bit_value(to_bytes(value));
+
+    if (!(bit_value & 0b01111111'10000000'00000000'00000000)) {
+        return false;
+    }
+    if ((bit_value << 1) >> 24 == 0b00000000'00000000'00000000'11111111) {
+        if (bit_value << 9 && !(bit_value >> 31)) {
+            return false;
+        }
+        if (!(bit_value << 9)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool is_subnormal(float const value)
+{
+    uint32_t bit_value(to_bytes(value));
+    bit_value <<= 1;
+
+    if (bit_value >> 24 == 0b00000000'00000000'00000000'00000000 && bit_value) {
+        return true;
+    }
+    else return false;
+}
+
+bool is_signed(float const value)
+{
+    uint32_t bit_value(to_bytes(value));
+    return bit_value >> 31;
+}
+
+auto classify(float const value)
+{
+    if (is_inf(value)) {
+        return "Inf";
+    }
+    if (is_nan(value)) {
+        return "NaN";
+    }
+    if (is_normal(value)) {
+        return "normal";
+    }
+    if (is_subnormal(value)) {
+        return "subnormal";
+    }
+    if (is_zero(value)) {
+        return "zero";
+    }
+    else return "unknown";
+}
+
 int main()
 {
     //std::cout << std::bitset<32>(to_bytes(std::numeric_limits<double>::max()))
@@ -132,8 +187,12 @@ int main()
     //std::numeric_limits<double>::max()
    
     //std::cout << typeid(~bit_value &= 0b01111111'10000000'00000000'00000000).name() << std::endl;
-    std::cout << is_finite(0.0) << std::endl;
-    std::cout << is_nan(std::numeric_limits<double>::max()) << std::endl;
+    std::cout << classify(1.0) << std::endl;
+    std::cout << classify(std::numeric_limits<float>::quiet_NaN()) << std::endl;
+    std::cout << classify(std::numeric_limits<float>::infinity()) << std::endl;
+    std::cout << classify(0.0) << std::endl;
+    std::cout << classify(std::numeric_limits<float>::min() / 2.0) << std::endl;
+    std::cout << classify(std::numeric_limits<float>::max()) << std::endl;
 
 }
 
