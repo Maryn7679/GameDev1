@@ -23,10 +23,10 @@ double maximum(double a, double b)
 
     a = absolute(a);
     b = absolute(b);
-    uint32_t bit_a(to_bytes(a));
-    uint32_t bit_b(to_bytes(b));
+    uint64_t bit_a(to_bytes(a));
+    uint64_t bit_b(to_bytes(b));
 
-    uint32_t mask;
+    uint64_t mask;
 
     for (mask = 1 << 63; mask != 0; mask >>= 1) {
 
@@ -59,10 +59,10 @@ double minimum(double a, double b)
 
     a = absolute(a);
     b = absolute(b);
-    uint32_t bit_a(to_bytes(a));
-    uint32_t bit_b(to_bytes(b));
+    uint64_t bit_a(to_bytes(a));
+    uint64_t bit_b(to_bytes(b));
 
-    uint32_t mask;
+    uint64_t mask;
 
     for (mask = 1 << 63; mask != 0; mask >>= 1) {
 

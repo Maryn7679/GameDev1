@@ -1,5 +1,6 @@
 #include <cinttypes> 
 #include "Functions.h"
+#include <iostream>
 
 float absolute(float value) {
     uint32_t bit_value(to_bytes(value));
@@ -88,3 +89,12 @@ float clamp(float k, float a, float b)
     else if (minimum(k, b) == k) return k;
     else return maximum(a, b);
 }
+
+bool are_equal(float a, float b) {
+    if (minimum(a, b) == maximum(a, b)) return true;
+    return false;
+}
+
+//bool are_equal_around(float a, float b, float precision) {
+//
+//}

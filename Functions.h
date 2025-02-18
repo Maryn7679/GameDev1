@@ -20,6 +20,12 @@ float absolute(float value);
 float maximum(float a, float b);
 float minimum(float a, float b);
 float clamp(float k, float a, float b);
+bool are_equal(float a, float b);
+bool are_equal_around(float a, float b, float precision);
+bool is_less_than(float a, float b);
+bool is_less_than_around(float a, float b, float precision);
+bool is_greater_than(float a, float b);
+bool is_greater_than_around(float a, float b, float precision);
 
 
 uint64_t to_bytes(double const value);
@@ -41,5 +47,11 @@ double absolute(double value);
 double maximum(double a, double b);
 double minimum(double a, double b);
 double clamp(double k, double a, double b);
+bool are_equal(double a, double b);
+bool are_equal_around(double a, double b, double precision);
+bool is_less_than(double a, double b);
+bool is_less_than_around(double a, double b, double precision);
+bool is_greater_than(double a, double b);
+bool is_greater_than_around(double a, double b, double precision);
 
 #endif
