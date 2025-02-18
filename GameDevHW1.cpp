@@ -340,9 +340,15 @@ double absolute(double value) {
     return to_double(bit_value);
 }
 
-bool is_greater_than(float a, float b) 
+float maximum(float a, float b)
 {
-    if (is_nan(a) || is_nan(b)) { return false; }
+    if (is_nan(a) || is_nan(b)) { return a; }
+    if (is_inf(a) || is_inf(b)) 
+        {
+        if (is_pos_inf(a)) return a;
+        else return b;
+        }
+    if (is_zero(a) && is_zero(b)) return a;
 
     if (is_signed(a) && !is_signed(b)) { return b; }
     if (!is_signed(a) && is_signed(b)) { return a; }
@@ -362,19 +368,79 @@ bool is_greater_than(float a, float b)
         }
         else {
             if ((bit_a & mask) && !sign) {
-                return true;
+                return a;
             }
-            return false;
+            return b;
         }
     }
-    return true;
+    return a;
 }
+
+float minimum(float a, float b)
+{
+    if (is_nan(a) || is_nan(b)) { return a; }
+    if (is_inf(a) || is_inf(b))
+    {
+        if (is_pos_inf(a)) return b;
+        else return a;
+    }
+    if (is_zero(a) && is_zero(b)) return a;
+
+    if (is_signed(a) && !is_signed(b)) { return a; }
+    if (!is_signed(a) && is_signed(b)) { return b; }
+    bool sign = is_signed(a);
+
+    a = absolute(a);
+    b = absolute(b);
+    uint32_t bit_a(to_bytes(a));
+    uint32_t bit_b(to_bytes(b));
+
+    uint32_t mask;
+
+    for (mask = 1 << 31; mask != 0; mask >>= 1) {
+
+        if ((bit_a & mask) == (bit_b & mask)) {
+            continue;
+        }
+        else {
+            if ((bit_a & mask) && !sign) {
+                return b;
+            }
+            return a;
+        }
+    }
+    return a;
+}
+
+float clamp(float k, float a, float b)
+{
+    if (minimum(k, a) == k) {
+        if (minimum(k, b) == k) return minimum(a, b);
+        else return k;
+    }
+    else if (minimum(k, b) == k) return k;
+    else return maximum(a, b);
+}
+
 
 int main()
 {
     //std::cout << std::bitset<32>(to_bytes(std::numeric_limits<float>::min()))
     //    << std::endl;
-    std::cout << std::max(NAN, 1.F) << std::endl;
+    std::cout << minimum(NAN, 1.F) << std::endl;
+    std::cout << minimum(NAN, NAN) << std::endl;
+    std::cout << minimum(67.9898F, NAN) << std::endl;
+    std::cout << minimum(std::numeric_limits<float>::min(), 0.F) << std::endl;
+    std::cout << minimum(std::numeric_limits<float>::infinity(), 878678.F) << std::endl;
+    std::cout << minimum(-0.F, 0.F) << std::endl << std::endl;
+
+    std::cout << std::min(NAN, 1.F) << std::endl;
+    std::cout << std::min(NAN, NAN) << std::endl;
+    std::cout << std::min(67.9898F, NAN) << std::endl;
+    std::cout << std::min(std::numeric_limits<float>::min(), 0.F) << std::endl;
+    std::cout << std::min(std::numeric_limits<float>::infinity(), 878678.F) << std::endl;
+    std::cout << std::max(-0.F, 0.F) << std::endl;
+
 
     //std::bitset<32> bit_value(~to_bytes(42.F));
     //std::numeric_limits<float>::infinity()
@@ -384,7 +450,7 @@ int main()
     //std::cout << typeid(~bit_value &= 0b01111111'10000000'00000000'00000000).name() << std::endl;
 
     //std::cout << classify(1.0) << std::endl;
-    std::cout << is_greater_than(0.F, NAN) << std::endl;
+    std::cout << maximum(0.F, 12.F) << std::endl;
     //std::cout << absolute(std::numeric_limits<double>::infinity()) << std::endl;
     //std::cout << absolute(0.0) << std::endl;
     //std::cout << absolute(std::numeric_limits<double>::min() / 2.0) << std::endl;
