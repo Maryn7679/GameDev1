@@ -127,7 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BasicFunctionsDouble.cpp" />
+    <ClCompile Include="BasicFunctionsFloat.cpp" />
+    <ClCompile Include="ComparisonFunctionsDouble.cpp" />
+    <ClCompile Include="ComparisonFunctionsFloat.cpp" />
     <ClCompile Include="GameDevHW1.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Functions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
