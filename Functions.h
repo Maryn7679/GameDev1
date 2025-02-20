@@ -14,7 +14,7 @@ bool is_nan(float const value);
 bool is_normal(float const value);
 bool is_subnormal(float const value);
 bool is_signed(float const value);
-auto classify(float const value);
+const char *classify(float const value);
 
 float absolute(float value);
 float maximum(float a, float b);
@@ -41,7 +41,7 @@ bool is_nan(double const value);
 bool is_normal(double const value);
 bool is_subnormal(double const value);
 bool is_signed(double const value);
-auto classify(double const value);
+const char *classify(double const value);
 
 double absolute(double value);
 double maximum(double a, double b);

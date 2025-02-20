@@ -141,7 +141,7 @@ bool is_signed(float const value)
     return bit_value >> 31;
 }
 
-auto classify(float const value)
+const char *classify(float const value)
 {
     if (is_inf(value)) {
         return "Inf";

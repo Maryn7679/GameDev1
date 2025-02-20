@@ -141,7 +141,7 @@ bool is_signed(double const value)
     return bit_value >> 63;
 }
 
-auto classify(double const value)
+const char *classify(double const value)
 {
     if (is_inf(value)) {
         return "Inf";

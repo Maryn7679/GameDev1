@@ -95,6 +95,31 @@ bool are_equal(float a, float b) {
     return false;
 }
 
-//bool are_equal_around(float a, float b, float precision) {
-//
-//}
+bool are_equal_around(float a, float b, float precision) {
+    if (absolute(b - a) < precision) return true;
+    else return false;
+}
+
+bool is_less_than(float a, float b) {
+    if (are_equal(a, b)) return false;
+    if (minimum(a, b) == a) return true;
+    return false;
+}
+
+bool is_less_than_around(float a, float b, float precision) {
+    if (are_equal_around(a, b, precision)) return false;
+    if (minimum(a, b) == a) return true;
+    return false;
+}
+
+bool is_greater_than(float a, float b) {
+    if (are_equal(a, b)) return false;
+    if (minimum(a, b) == b) return true;
+    return false;
+}
+
+bool is_greater_than_around(float a, float b, float precision) {
+    if (are_equal_around(a, b, precision)) return false;
+    if (minimum(a, b) == b) return true;
+    return false;
+}

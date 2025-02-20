@@ -27,8 +27,9 @@ double maximum(double a, double b)
     uint64_t bit_b(to_bytes(b));
 
     uint64_t mask;
+    long long i = 1;
 
-    for (mask = 1 << 63; mask != 0; mask >>= 1) {
+    for (mask = i << 63; mask != 0; mask >>= 1) {
 
         if ((bit_a & mask) == (bit_b & mask)) {
             continue;
@@ -63,8 +64,9 @@ double minimum(double a, double b)
     uint64_t bit_b(to_bytes(b));
 
     uint64_t mask;
+    long long i = 1;
 
-    for (mask = 1 << 63; mask != 0; mask >>= 1) {
+    for (mask = i << 63; mask != 0; mask >>= 1) {
 
         if ((bit_a & mask) == (bit_b & mask)) {
             continue;
@@ -87,4 +89,38 @@ double clamp(double k, double a, double b)
     }
     else if (minimum(k, b) == k) return k;
     else return maximum(a, b);
+}
+
+bool are_equal(double a, double b) {
+    if (minimum(a, b) == maximum(a, b)) return true;
+    return false;
+}
+
+bool are_equal_around(double a, double b, double precision) {
+    if (absolute(b - a) < precision) return true;
+    else return false;
+}
+
+bool is_less_than(double a, double b) {
+    if (are_equal(a, b)) return false;
+    if (minimum(a, b) == a) return true;
+    return false;
+}
+
+bool is_less_than_around(double a, double b, double precision) {
+    if (are_equal_around(a, b, precision)) return false;
+    if (minimum(a, b) == a) return true;
+    return false;
+}
+
+bool is_greater_than(double a, double b) {
+    if (are_equal(a, b)) return false;
+    if (minimum(a, b) == b) return true;
+    return false;
+}
+
+bool is_greater_than_around(double a, double b, double precision) {
+    if (are_equal_around(a, b, precision)) return false;
+    if (minimum(a, b) == b) return true;
+    return false;
 }

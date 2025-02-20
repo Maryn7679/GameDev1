@@ -131,7 +131,7 @@
     <ClCompile Include="BasicFunctionsFloat.cpp" />
     <ClCompile Include="ComparisonFunctionsDouble.cpp" />
     <ClCompile Include="ComparisonFunctionsFloat.cpp" />
-    <ClCompile Include="GameDevHW1.cpp" />
+    <ClCompile Include="Tests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Functions.h" />
