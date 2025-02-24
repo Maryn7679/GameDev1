@@ -10,75 +10,37 @@ double absolute(double value) {
 double maximum(double a, double b)
 {
     if (is_nan(a) || is_nan(b)) { return a; }
+    if (is_zero(a) && is_zero(b)) return a;
+
+    if (is_signed(a) && !is_signed(b)) { return b; }
+    if (!is_signed(a) && is_signed(b)) { return a; }
+
     if (is_inf(a) || is_inf(b))
     {
         if (is_pos_inf(a)) return a;
         else return b;
     }
-    if (is_zero(a) && is_zero(b)) return a;
 
-    if (is_signed(a) && !is_signed(b)) { return b; }
-    if (!is_signed(a) && is_signed(b)) { return a; }
-    bool sign = is_signed(a);
-
-    a = absolute(a);
-    b = absolute(b);
-    uint64_t bit_a(to_bytes(a));
-    uint64_t bit_b(to_bytes(b));
-
-    uint64_t mask;
-    long long i = 1;
-
-    for (mask = i << 63; mask != 0; mask >>= 1) {
-
-        if ((bit_a & mask) == (bit_b & mask)) {
-            continue;
-        }
-        else {
-            if ((bit_a & mask) && !sign) {
-                return a;
-            }
-            return b;
-        }
-    }
-    return a;
+    if (a - b > 0) { return a; }
+    else return b;
 }
 
 double minimum(double a, double b)
 {
     if (is_nan(a) || is_nan(b)) { return a; }
+    if (is_zero(a) && is_zero(b)) return a;
+
+    if (is_signed(a) && !is_signed(b)) { return a; }
+    if (!is_signed(a) && is_signed(b)) { return b; }
+
     if (is_inf(a) || is_inf(b))
     {
         if (is_pos_inf(a)) return b;
         else return a;
     }
-    if (is_zero(a) && is_zero(b)) return a;
-
-    if (is_signed(a) && !is_signed(b)) { return a; }
-    if (!is_signed(a) && is_signed(b)) { return b; }
-    bool sign = is_signed(a);
-
-    a = absolute(a);
-    b = absolute(b);
-    uint64_t bit_a(to_bytes(a));
-    uint64_t bit_b(to_bytes(b));
-
-    uint64_t mask;
-    long long i = 1;
-
-    for (mask = i << 63; mask != 0; mask >>= 1) {
-
-        if ((bit_a & mask) == (bit_b & mask)) {
-            continue;
-        }
-        else {
-            if ((bit_a & mask) && !sign) {
-                return b;
-            }
-            return a;
-        }
-    }
-    return a;
+   
+    if (a - b > 0) { return b; }
+    else return a;
 }
 
 double clamp(double k, double a, double b)

@@ -1,7 +1,5 @@
 #include <iostream>
-#include <bitset>
 #include <cinttypes> 
-#include <typeinfo>
 #include "Functions.h"
 
 void basic_float_tests() {
@@ -728,6 +726,577 @@ void basic_double_tests() {
 
     std::cout << std::endl;
 }
+void comparison_float_tests() {
+    if (absolute(1.65F) == abs(1.65F)) { std::cout << "absolute(normal): OK" << std::endl; }
+    else { std::cout << "absolute(normal): ERROR" << std::endl; }
+
+    if (absolute(-1.65F) == abs(-1.65F)) { std::cout << "absolute(-normal): OK" << std::endl; }
+    else { std::cout << "absolute(-normal): ERROR" << std::endl; }
+
+    if (absolute(std::numeric_limits<float>::min() / 2) == abs(std::numeric_limits<float>::min() / 2)) 
+    { std::cout << "absolute(subnormal): OK" << std::endl; }
+    else { std::cout << "absolute(subnormal): ERROR" << std::endl; }
+
+    if (absolute(std::numeric_limits<float>::min() / 2) == abs(std::numeric_limits<float>::min() / 2)) 
+    { std::cout << "absolute(subnormal): OK" << std::endl; }
+    else { std::cout << "absolute(subnormal): ERROR" << std::endl; }
+
+    if (absolute(std::numeric_limits<float>::min() / -2) == abs(std::numeric_limits<float>::min() / -2))
+    {
+        std::cout << "absolute(-subnormal): OK" << std::endl;
+    }
+    else { std::cout << "absolute(-subnormal): ERROR" << std::endl; }
+
+    if (absolute(0.F) == abs(0.F)) { std::cout << "absolute(zero): OK" << std::endl; }
+    else { std::cout << "absolute(zero): ERROR" << std::endl; }
+
+    if (absolute(-0.F) == abs(-0.F)) { std::cout << "absolute(-zero): OK" << std::endl; }
+    else { std::cout << "absolute(-zero): ERROR" << std::endl; }
+
+    if (absolute(std::numeric_limits<float>::infinity()) == abs(std::numeric_limits<float>::infinity())) 
+    { 
+        std::cout << "absolute(inf): OK" << std::endl;
+    }
+    else { std::cout << "absolute(inf): ERROR" << std::endl; }
+
+    if (absolute(-std::numeric_limits<float>::infinity()) == abs(-std::numeric_limits<float>::infinity()))
+    {
+        std::cout << "absolute(-inf): OK" << std::endl;
+    }
+    else { std::cout << "absolute(-inf): ERROR" << std::endl; }
+
+    if (isnan(absolute(std::numeric_limits<float>::quiet_NaN())))
+    {
+        std::cout << "absolute(NaN): OK" << std::endl;
+    }
+    else { std::cout << "absolute(NaN): ERROR" << std::endl; }
+
+    if (isnan(-absolute(std::numeric_limits<float>::quiet_NaN())))
+    {
+        std::cout << "absolute(-NaN): OK" << std::endl;
+    }
+    else { std::cout << "absolute(-NaN): ERROR" << std::endl; }
+
+    if (absolute(std::numeric_limits<float>::max()) == abs(std::numeric_limits<float>::max()))
+    {
+        std::cout << "absolute(max): OK" << std::endl;
+    }
+    else { std::cout << "absolute(max): ERROR" << std::endl; }
+
+    if (absolute(-std::numeric_limits<float>::max()) == abs(-std::numeric_limits<float>::max()))
+    {
+        std::cout << "absolute(-max): OK" << std::endl;
+    }
+    else { std::cout << "absolute(-max): ERROR" << std::endl; }
+
+    if (absolute(std::numeric_limits<float>::min()) == abs(std::numeric_limits<float>::min()))
+    {
+        std::cout << "absolute(min): OK" << std::endl;
+    }
+    else { std::cout << "absolute(min): ERROR" << std::endl; }
+
+    if (absolute(-std::numeric_limits<float>::min()) == abs(-std::numeric_limits<float>::min()))
+    {
+        std::cout << "absolute(-min): OK" << std::endl;
+    }
+    else { std::cout << "absolute(-min): ERROR" << std::endl; }
+
+    if (absolute(std::numeric_limits<float>::epsilon()) == abs(std::numeric_limits<float>::epsilon()))
+    {
+        std::cout << "absolute(epsilon): OK" << std::endl;
+    }
+    else { std::cout << "absolute(epsilon): ERROR" << std::endl; }
+
+    if (absolute(-std::numeric_limits<float>::epsilon()) == abs(-std::numeric_limits<float>::epsilon()))
+    {
+        std::cout << "absolute(-epsilon): OK" << std::endl;
+    }
+    else { std::cout << "absolute(-epsilon): ERROR" << std::endl; }
+
+    std::cout << std::endl;
+
+    if ((maximum(1.65F, 1.66F) == std::max(1.65F, 1.66F)) && (maximum(1.66F, 1.65F) == std::max(1.66F, 1.65F))) 
+    {
+        std::cout << "maximum(normal, normal): OK" << std::endl;
+    }
+    else { std::cout << "maximum(normal, normal): ERROR" << std::endl;}
+
+    if ((maximum(1.65F, -1.66F) == std::max(1.65F, -1.66F)) && (maximum(-1.66F, 1.65F) == std::max(-1.66F, 1.65F)))
+    {
+        std::cout << "maximum(normal, -normal): OK" << std::endl;
+    }
+    else { std::cout << "maximum(normal, -normal): ERROR" << std::endl; }
+
+    if ((maximum(-1.65F, -1.66F) == std::max(-1.65F, -1.66F)) && (maximum(-1.66F, -1.65F) == std::max(-1.66F, -1.65F)))
+    {
+        std::cout << "maximum(-normal, -normal): OK" << std::endl;
+    }
+    else { std::cout << "maximum(-normal, -normal): ERROR" << std::endl; }
+
+    if ((maximum(1.65F, std::numeric_limits<float>::infinity()) == std::max(1.65F, std::numeric_limits<float>::infinity()))
+        && (maximum(std::numeric_limits<float>::infinity(), 1.65F) == std::max(std::numeric_limits<float>::infinity(), 1.65F)))
+    {
+        std::cout << "maximum(normal, inf): OK" << std::endl;
+    }
+    else { std::cout << "maximum(normal, inf): ERROR" << std::endl; }
+
+    if ((maximum(1.65F, -std::numeric_limits<float>::infinity()) == std::max(1.65F, -std::numeric_limits<float>::infinity()))
+        && (maximum(-std::numeric_limits<float>::infinity(), 1.65F) == std::max(-std::numeric_limits<float>::infinity(), 1.65F)))
+    {
+        std::cout << "maximum(normal, -inf): OK" << std::endl;
+    }
+    else { std::cout << "maximum(normal, -inf): ERROR" << std::endl; }
+
+    if ((maximum(std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity()) == std::max(std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity()))
+        && (maximum(std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity()) == std::max(std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity())))
+    {
+        std::cout << "maximum(inf, -inf): OK" << std::endl;
+    }
+    else { std::cout << "maximum(inf, -inf): ERROR" << std::endl; }
+
+    if ((maximum(1.65F, std::numeric_limits<float>::quiet_NaN()) == std::max(1.65F, std::numeric_limits<float>::quiet_NaN()))
+        && isnan(maximum(std::numeric_limits<float>::quiet_NaN(), 1.65F)) && isnan(std::max(std::numeric_limits<float>::quiet_NaN(), 1.65F)))
+    {
+        std::cout << "maximum(normal, NaN): OK" << std::endl;
+    }
+    else { std::cout << "maximum(normal, NaN): ERROR" << std::endl; }
+
+    if ((maximum(std::numeric_limits<float>::min(), std::numeric_limits<float>::epsilon()) == std::max(std::numeric_limits<float>::min(), std::numeric_limits<float>::epsilon()))
+        && (maximum(std::numeric_limits<float>::epsilon(), std::numeric_limits<float>::min()) == std::max(std::numeric_limits<float>::epsilon(), std::numeric_limits<float>::min())))
+    {
+        std::cout << "maximum(min, epsilon): OK" << std::endl;
+    }
+    else { std::cout << "maximum(min, epsilon): ERROR" << std::endl; }
+
+    std::cout << std::endl;
+
+    if ((minimum(1.65F, 1.66F) == std::min(1.65F, 1.66F)) && (minimum(1.66F, 1.65F) == std::min(1.66F, 1.65F)))
+    {
+        std::cout << "minimum(normal, normal): OK" << std::endl;
+    }
+    else { std::cout << "minimum(normal, normal): ERROR" << std::endl; }
+
+    if ((minimum(1.65F, -1.66F) == std::min(1.65F, -1.66F)) && (minimum(-1.66F, 1.65F) == std::min(-1.66F, 1.65F)))
+    {
+        std::cout << "minimum(normal, -normal): OK" << std::endl;
+    }
+    else { std::cout << "minimum(normal, -normal): ERROR" << std::endl; }
+
+    if ((minimum(-1.65F, -1.66F) == std::min(-1.65F, -1.66F)) && (minimum(-1.66F, -1.65F) == std::min(-1.66F, -1.65F)))
+    {
+        std::cout << "minimum(-normal, -normal): OK" << std::endl;
+    }
+    else { std::cout << "minimum(-normal, -normal): ERROR" << std::endl; }
+
+    if ((minimum(1.65F, std::numeric_limits<float>::infinity()) == std::min(1.65F, std::numeric_limits<float>::infinity()))
+        && (minimum(std::numeric_limits<float>::infinity(), 1.65F) == std::min(std::numeric_limits<float>::infinity(), 1.65F)))
+    {
+        std::cout << "minimum(normal, inf): OK" << std::endl;
+    }
+    else { std::cout << "minimum(normal, inf): ERROR" << std::endl; }
+
+    if ((minimum(1.65F, -std::numeric_limits<float>::infinity()) == std::min(1.65F, -std::numeric_limits<float>::infinity()))
+        && (minimum(-std::numeric_limits<float>::infinity(), 1.65F) == std::min(-std::numeric_limits<float>::infinity(), 1.65F)))
+    {
+        std::cout << "minimum(normal, -inf): OK" << std::endl;
+    }
+    else { std::cout << "minimum(normal, -inf): ERROR" << std::endl; }
+
+    if ((minimum(std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity()) == std::min(std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity()))
+        && (minimum(std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity()) == std::min(std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity())))
+    {
+        std::cout << "minimum(inf, -inf): OK" << std::endl;
+    }
+    else { std::cout << "minimum(inf, -inf): ERROR" << std::endl; }
+
+    if ((minimum(1.65F, std::numeric_limits<float>::quiet_NaN()) == std::min(1.65F, std::numeric_limits<float>::quiet_NaN()))
+        && isnan(minimum(std::numeric_limits<float>::quiet_NaN(), 1.65F)) && isnan(std::min(std::numeric_limits<float>::quiet_NaN(), 1.65F)))
+    {
+        std::cout << "minimum(normal, NaN): OK" << std::endl;
+    }
+    else { std::cout << "minimum(normal, NaN): ERROR" << std::endl; }
+
+    if ((minimum(std::numeric_limits<float>::min(), std::numeric_limits<float>::epsilon()) == std::min(std::numeric_limits<float>::min(), std::numeric_limits<float>::epsilon()))
+        && (minimum(std::numeric_limits<float>::epsilon(), std::numeric_limits<float>::min()) == std::min(std::numeric_limits<float>::epsilon(), std::numeric_limits<float>::min())))
+    {
+        std::cout << "minimum(min, epsilon): OK" << std::endl;
+    }
+    else { std::cout << "minimum(min, epsilon): ERROR" << std::endl; }
+
+    std::cout << std::endl;
+
+    if ((clamp(1.65F, 1.66F, 1.64F) == clamp(1.65F, 1.64F, 1.66F)) && (clamp(1.65F, 1.64F, 1.66F) == 1.65F))
+    {
+        std::cout << "clamp(k, a, b) where a < k < b: OK" << std::endl;
+    }
+    else { std::cout << "clamp(k, a, b) where a < k < b: ERROR" << std::endl; }
+
+    if ((clamp(1.65F, -1.66F, 1.64F) == clamp(1.65F, 1.64F, -1.66F)) && (clamp(1.65F, 1.64F, -1.66F) == 1.64F))
+    {
+        std::cout << "clamp(k, a, b) where a < b < k: OK" << std::endl;
+    }
+    else { std::cout << "clamp(k, a, b) where a < b < k: ERROR" << std::endl; }
+
+    if ((clamp(1.65F, 1.66F, 1.67F) == clamp(1.65F, 1.67F, 1.66F)) && (clamp(1.65F, 1.67F, 1.66F) == 1.66F))
+    {
+        std::cout << "clamp(k, a, b) where k < a < b: OK" << std::endl;
+    }
+    else { std::cout << "clamp(k, a, b) where k < a < b: ERROR" << std::endl; }
+
+    if (clamp(NAN, 1.66F, 1.64F) == clamp(NAN, 1.64F, 1.66F))
+    {
+        std::cout << "clamp(NaN, a, b): OK" << std::endl;
+    }
+    else { std::cout << "clamp(NaN, a, b): ERROR" << std::endl; }
+
+    std::cout << std::endl;
+
+    if (are_equal(1.65F, 1.65F)) std::cout << "are_equal(normal = normal): OK" << std::endl;
+    else std::cout << "are_equal(normal = normal): ERROR" << std::endl;
+
+    if (!are_equal(1.65F, 1.66F)) std::cout << "are_equal(normal != normal): OK" << std::endl;
+    else std::cout << "are_equal(normal != normal): ERROR" << std::endl;
+
+    if (!are_equal(NAN, 1.65F)) std::cout << "are_equal(NaN, normal): OK" << std::endl;
+    else std::cout << "are_equal(NaN, normal): ERROR" << std::endl;
+
+    if (!are_equal(NAN, NAN)) std::cout << "are_equal(NaN, NaN): OK" << std::endl;
+    else std::cout << "are_equal(NaN, NaN): ERROR" << std::endl;
+
+    std::cout << std::endl;
+
+    if (are_equal_around(1.658F, 1.657F, 0.01F)) std::cout << "are_equal_around(normal ~= normal): OK" << std::endl;
+    else std::cout << "are_equal_around(normal ~= normal): ERROR" << std::endl;
+
+    if (!are_equal_around(1.668F, 1.617F, 0.01F)) std::cout << "are_equal_around(normal !~= normal): OK" << std::endl;
+    else std::cout << "are_equal_around(normal !~= normal): ERROR" << std::endl;
+
+    std::cout << std::endl;
+
+    if (is_less_than(1.65F, 1.66F)) std::cout << "is_less_than(a < b): OK" << std::endl;
+    else std::cout << "is_less_than(a < b): ERROR" << std::endl;
+
+    if (!is_less_than(1.65F, 1.65F)) std::cout << "is_less_than(a = b): OK" << std::endl;
+    else std::cout << "is_less_than(a = b): ERROR" << std::endl;
+
+    if (!is_less_than(1.65F, 1.64F)) std::cout << "is_less_than(a > b): OK" << std::endl;
+    else std::cout << "is_less_than(a > b): ERROR" << std::endl;
+
+    std::cout << std::endl;
+
+    if (is_less_than_around(1.655F, 1.666F, 0.01F)) std::cout << "is_less_than_around(a < b): OK" << std::endl;
+    else std::cout << "is_less_than_around(a < b): ERROR" << std::endl;
+
+    if (!is_less_than_around(1.655F, 1.656F, 0.01F)) std::cout << "is_less_than_around(a ~= b): OK" << std::endl;
+    else std::cout << "is_less_than_around(a ~= b): ERROR" << std::endl;
+
+    std::cout << std::endl;
+
+    if (!is_greater_than(1.65F, 1.66F)) std::cout << "is_greater_than(a < b): OK" << std::endl;
+    else std::cout << "is_greater_than(a < b): ERROR" << std::endl;
+
+    if (!is_greater_than(1.65F, 1.65F)) std::cout << "is_greater_than(a = b): OK" << std::endl;
+    else std::cout << "is_greater_than(a = b): ERROR" << std::endl;
+
+    if (is_greater_than(1.65F, 1.64F)) std::cout << "is_greater_than(a > b): OK" << std::endl;
+    else std::cout << "is_greater_than(a > b): ERROR" << std::endl;
+
+    std::cout << std::endl;
+
+    if (is_greater_than_around(1.666F, 1.655F, 0.01F)) std::cout << "is_greater_than_around(a < b): OK" << std::endl;
+    else std::cout << "is_greater_than_around(a < b): ERROR" << std::endl;
+
+    if (!is_greater_than_around(1.656F, 1.655F, 0.01F)) std::cout << "is_greater_than_around(a ~= b): OK" << std::endl;
+    else std::cout << "is_greater_than_around(a ~= b): ERROR" << std::endl;
+}
+void comparison_double_tests() {
+    if (absolute(1.65) == abs(1.65)) { std::cout << "absolute(normal): OK" << std::endl; }
+    else { std::cout << "absolute(normal): ERROR" << std::endl; }
+
+    if (absolute(-1.65) == abs(-1.65)) { std::cout << "absolute(-normal): OK" << std::endl; }
+    else { std::cout << "absolute(-normal): ERROR" << std::endl; }
+
+    if (absolute(std::numeric_limits<double>::min() / 2) == abs(std::numeric_limits<double>::min() / 2))
+    {
+        std::cout << "absolute(subnormal): OK" << std::endl;
+    }
+    else { std::cout << "absolute(subnormal): ERROR" << std::endl; }
+
+    if (absolute(std::numeric_limits<double>::min() / 2) == abs(std::numeric_limits<double>::min() / 2))
+    {
+        std::cout << "absolute(subnormal): OK" << std::endl;
+    }
+    else { std::cout << "absolute(subnormal): ERROR" << std::endl; }
+
+    if (absolute(std::numeric_limits<double>::min() / -2) == abs(std::numeric_limits<double>::min() / -2))
+    {
+        std::cout << "absolute(-subnormal): OK" << std::endl;
+    }
+    else { std::cout << "absolute(-subnormal): ERROR" << std::endl; }
+
+    if (absolute(0.0) == abs(0.0)) { std::cout << "absolute(zero): OK" << std::endl; }
+    else { std::cout << "absolute(zero): ERROR" << std::endl; }
+
+    if (absolute(-0.0) == abs(-0.0)) { std::cout << "absolute(-zero): OK" << std::endl; }
+    else { std::cout << "absolute(-zero): ERROR" << std::endl; }
+
+    if (absolute(std::numeric_limits<double>::infinity()) == abs(std::numeric_limits<double>::infinity()))
+    {
+        std::cout << "absolute(inf): OK" << std::endl;
+    }
+    else { std::cout << "absolute(inf): ERROR" << std::endl; }
+
+    if (absolute(-std::numeric_limits<double>::infinity()) == abs(-std::numeric_limits<double>::infinity()))
+    {
+        std::cout << "absolute(-inf): OK" << std::endl;
+    }
+    else { std::cout << "absolute(-inf): ERROR" << std::endl; }
+
+    if (isnan(absolute(std::numeric_limits<double>::quiet_NaN())))
+    {
+        std::cout << "absolute(NaN): OK" << std::endl;
+    }
+    else { std::cout << "absolute(NaN): ERROR" << std::endl; }
+
+    if (isnan(-absolute(std::numeric_limits<float>::quiet_NaN())))
+    {
+        std::cout << "absolute(-NaN): OK" << std::endl;
+    }
+    else { std::cout << "absolute(-NaN): ERROR" << std::endl; }
+
+    if (absolute(std::numeric_limits<double>::max()) == abs(std::numeric_limits<double>::max()))
+    {
+        std::cout << "absolute(max): OK" << std::endl;
+    }
+    else { std::cout << "absolute(max): ERROR" << std::endl; }
+
+    if (absolute(-std::numeric_limits<double>::max()) == abs(-std::numeric_limits<double>::max()))
+    {
+        std::cout << "absolute(-max): OK" << std::endl;
+    }
+    else { std::cout << "absolute(-max): ERROR" << std::endl; }
+
+    if (absolute(std::numeric_limits<double>::min()) == abs(std::numeric_limits<double>::min()))
+    {
+        std::cout << "absolute(min): OK" << std::endl;
+    }
+    else { std::cout << "absolute(min): ERROR" << std::endl; }
+
+    if (absolute(-std::numeric_limits<double>::min()) == abs(-std::numeric_limits<double>::min()))
+    {
+        std::cout << "absolute(-min): OK" << std::endl;
+    }
+    else { std::cout << "absolute(-min): ERROR" << std::endl; }
+
+    if (absolute(std::numeric_limits<double>::epsilon()) == abs(std::numeric_limits<double>::epsilon()))
+    {
+        std::cout << "absolute(epsilon): OK" << std::endl;
+    }
+    else { std::cout << "absolute(epsilon): ERROR" << std::endl; }
+
+    if (absolute(-std::numeric_limits<double>::epsilon()) == abs(-std::numeric_limits<double>::epsilon()))
+    {
+        std::cout << "absolute(-epsilon): OK" << std::endl;
+    }
+    else { std::cout << "absolute(-epsilon): ERROR" << std::endl; }
+
+    std::cout << std::endl;
+
+    if ((maximum(1.65, 1.66) == std::max(1.65, 1.66)) && (maximum(1.66, 1.65) == std::max(1.66, 1.65)))
+    {
+        std::cout << "maximum(normal, normal): OK" << std::endl;
+    }
+    else { std::cout << "maximum(normal, normal): ERROR" << std::endl; }
+
+    if ((maximum(1.65, -1.66) == std::max(1.65, -1.66)) && (maximum(-1.66, 1.65) == std::max(-1.66, 1.65)))
+    {
+        std::cout << "maximum(normal, -normal): OK" << std::endl;
+    }
+    else { std::cout << "maximum(normal, -normal): ERROR" << std::endl; }
+
+    if ((maximum(-1.65, -1.66) == std::max(-1.65, -1.66)) && (maximum(-1.66, -1.65) == std::max(-1.66, -1.65)))
+    {
+        std::cout << "maximum(-normal, -normal): OK" << std::endl;
+    }
+    else { std::cout << "maximum(-normal, -normal): ERROR" << std::endl; }
+
+    if ((maximum(1.65, std::numeric_limits<double>::infinity()) == std::max(1.65, std::numeric_limits<double>::infinity()))
+        && (maximum(std::numeric_limits<double>::infinity(), 1.65) == std::max(std::numeric_limits<double>::infinity(), 1.65)))
+    {
+        std::cout << "maximum(normal, inf): OK" << std::endl;
+    }
+    else { std::cout << "maximum(normal, inf): ERROR" << std::endl; }
+
+    if ((maximum(1.65, -std::numeric_limits<double>::infinity()) == std::max(1.65, -std::numeric_limits<double>::infinity()))
+        && (maximum(-std::numeric_limits<double>::infinity(), 1.65) == std::max(-std::numeric_limits<double>::infinity(), 1.65)))
+    {
+        std::cout << "maximum(normal, -inf): OK" << std::endl;
+    }
+    else { std::cout << "maximum(normal, -inf): ERROR" << std::endl; }
+
+    if ((maximum(std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity()) == std::max(std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity()))
+        && (maximum(std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity()) == std::max(std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity())))
+    {
+        std::cout << "maximum(inf, -inf): OK" << std::endl;
+    }
+    else { std::cout << "maximum(inf, -inf): ERROR" << std::endl; }
+
+    if ((maximum(1.65, std::numeric_limits<double>::quiet_NaN()) == std::max(1.65, std::numeric_limits<double>::quiet_NaN()))
+        && isnan(maximum(std::numeric_limits<double>::quiet_NaN(), 1.65)) && isnan(std::max(std::numeric_limits<double>::quiet_NaN(), 1.65)))
+    {
+        std::cout << "maximum(normal, NaN): OK" << std::endl;
+    }
+    else { std::cout << "maximum(normal, NaN): ERROR" << std::endl; }
+
+    if ((maximum(std::numeric_limits<double>::min(), std::numeric_limits<double>::epsilon()) == std::max(std::numeric_limits<double>::min(), std::numeric_limits<double>::epsilon()))
+        && (maximum(std::numeric_limits<double>::epsilon(), std::numeric_limits<double>::min()) == std::max(std::numeric_limits<double>::epsilon(), std::numeric_limits<double>::min())))
+    {
+        std::cout << "maximum(min, epsilon): OK" << std::endl;
+    }
+    else { std::cout << "maximum(min, epsilon): ERROR" << std::endl; }
+
+    std::cout << std::endl;
+
+    if ((minimum(1.65, 1.66) == std::min(1.65, 1.66)) && (minimum(1.66, 1.65) == std::min(1.66, 1.65)))
+    {
+        std::cout << "minimum(normal, normal): OK" << std::endl;
+    }
+    else { std::cout << "minimum(normal, normal): ERROR" << std::endl; }
+
+    if ((minimum(1.65, -1.66) == std::min(1.65, -1.66)) && (minimum(-1.66, 1.65) == std::min(-1.66, 1.65)))
+    {
+        std::cout << "minimum(normal, -normal): OK" << std::endl;
+    }
+    else { std::cout << "minimum(normal, -normal): ERROR" << std::endl; }
+
+    if ((minimum(-1.65, -1.66) == std::min(-1.65, -1.66)) && (minimum(-1.66, -1.65) == std::min(-1.66, -1.65)))
+    {
+        std::cout << "minimum(-normal, -normal): OK" << std::endl;
+    }
+    else { std::cout << "minimum(-normal, -normal): ERROR" << std::endl; }
+
+    if ((minimum(1.65, std::numeric_limits<double>::infinity()) == std::min(1.65, std::numeric_limits<double>::infinity()))
+        && (minimum(std::numeric_limits<double>::infinity(), 1.65) == std::min(std::numeric_limits<double>::infinity(), 1.65)))
+    {
+        std::cout << "minimum(normal, inf): OK" << std::endl;
+    }
+    else { std::cout << "minimum(normal, inf): ERROR" << std::endl; }
+
+    if ((minimum(1.65, -std::numeric_limits<double>::infinity()) == std::min(1.65, -std::numeric_limits<double>::infinity()))
+        && (minimum(-std::numeric_limits<double>::infinity(), 1.65) == std::min(-std::numeric_limits<double>::infinity(), 1.65)))
+    {
+        std::cout << "minimum(normal, -inf): OK" << std::endl;
+    }
+    else { std::cout << "minimum(normal, -inf): ERROR" << std::endl; }
+
+    if ((minimum(std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity()) == std::min(std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity()))
+        && (minimum(std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity()) == std::min(std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity())))
+    {
+        std::cout << "minimum(inf, -inf): OK" << std::endl;
+    }
+    else { std::cout << "minimum(inf, -inf): ERROR" << std::endl; }
+
+    if ((minimum(1.65, std::numeric_limits<double>::quiet_NaN()) == std::min(1.65, std::numeric_limits<double>::quiet_NaN()))
+        && isnan(minimum(std::numeric_limits<double>::quiet_NaN(), 1.65)) && isnan(std::min(std::numeric_limits<double>::quiet_NaN(), 1.65)))
+    {
+        std::cout << "minimum(normal, NaN): OK" << std::endl;
+    }
+    else { std::cout << "minimum(normal, NaN): ERROR" << std::endl; }
+
+    if ((minimum(std::numeric_limits<double>::min(), std::numeric_limits<double>::epsilon()) == std::min(std::numeric_limits<double>::min(), std::numeric_limits<double>::epsilon()))
+        && (minimum(std::numeric_limits<double>::epsilon(), std::numeric_limits<double>::min()) == std::min(std::numeric_limits<double>::epsilon(), std::numeric_limits<double>::min())))
+    {
+        std::cout << "minimum(min, epsilon): OK" << std::endl;
+    }
+    else { std::cout << "minimum(min, epsilon): ERROR" << std::endl; }
+
+    std::cout << std::endl;
+
+    if ((clamp(1.65, 1.66, 1.64) == clamp(1.65, 1.64, 1.66)) && (clamp(1.65, 1.64, 1.66) == 1.65))
+    {
+        std::cout << "clamp(k, a, b) where a < k < b: OK" << std::endl;
+    }
+    else { std::cout << "clamp(k, a, b) where a < k < b: ERROR" << std::endl; }
+
+    if ((clamp(1.65, -1.66, 1.64) == clamp(1.65, 1.64, -1.66)) && (clamp(1.65, 1.64, -1.66) == 1.64))
+    {
+        std::cout << "clamp(k, a, b) where a < b < k: OK" << std::endl;
+    }
+    else { std::cout << "clamp(k, a, b) where a < b < k: ERROR" << std::endl; }
+
+    if ((clamp(1.65, 1.66, 1.67) == clamp(1.65, 1.67, 1.66)) && (clamp(1.65, 1.67, 1.66) == 1.66))
+    {
+        std::cout << "clamp(k, a, b) where k < a < b: OK" << std::endl;
+    }
+    else { std::cout << "clamp(k, a, b) where k < a < b: ERROR" << std::endl; }
+
+    if (clamp(std::numeric_limits<double>::quiet_NaN(), 1.66, 1.64) == clamp(std::numeric_limits<double>::quiet_NaN(), 1.64, 1.66))
+    {
+        std::cout << "clamp(NaN, a, b): OK" << std::endl;
+    }
+    else { std::cout << "clamp(NaN, a, b): ERROR" << std::endl; }
+
+    std::cout << std::endl;
+
+    if (are_equal(1.65, 1.65)) std::cout << "are_equal(normal = normal): OK" << std::endl;
+    else std::cout << "are_equal(normal = normal): ERROR" << std::endl;
+
+    if (!are_equal(1.65, 1.66)) std::cout << "are_equal(normal != normal): OK" << std::endl;
+    else std::cout << "are_equal(normal != normal): ERROR" << std::endl;
+
+    if (!are_equal(std::numeric_limits<double>::quiet_NaN(), 1.65)) std::cout << "are_equal(NaN, normal): OK" << std::endl;
+    else std::cout << "are_equal(NaN, normal): ERROR" << std::endl;
+
+    if (!are_equal(std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN())) std::cout << "are_equal(NaN, NaN): OK" << std::endl;
+    else std::cout << "are_equal(NaN, NaN): ERROR" << std::endl;
+
+    std::cout << std::endl;
+
+    if (are_equal_around(1.658, 1.657, 0.01)) std::cout << "are_equal_around(normal ~= normal): OK" << std::endl;
+    else std::cout << "are_equal_around(normal ~= normal): ERROR" << std::endl;
+
+    if (!are_equal_around(1.668, 1.617, 0.01)) std::cout << "are_equal_around(normal !~= normal): OK" << std::endl;
+    else std::cout << "are_equal_around(normal !~= normal): ERROR" << std::endl;
+
+    std::cout << std::endl;
+
+    if (is_less_than(1.65, 1.66)) std::cout << "is_less_than(a < b): OK" << std::endl;
+    else std::cout << "is_less_than(a < b): ERROR" << std::endl;
+
+    if (!is_less_than(1.65, 1.65)) std::cout << "is_less_than(a = b): OK" << std::endl;
+    else std::cout << "is_less_than(a = b): ERROR" << std::endl;
+
+    if (!is_less_than(1.65, 1.64)) std::cout << "is_less_than(a > b): OK" << std::endl;
+    else std::cout << "is_less_than(a > b): ERROR" << std::endl;
+
+    std::cout << std::endl;
+
+    if (is_less_than_around(1.655, 1.666, 0.01)) std::cout << "is_less_than_around(a < b): OK" << std::endl;
+    else std::cout << "is_less_than_around(a < b): ERROR" << std::endl;
+
+    if (!is_less_than_around(1.655, 1.656, 0.01)) std::cout << "is_less_than_around(a ~= b): OK" << std::endl;
+    else std::cout << "is_less_than_around(a ~= b): ERROR" << std::endl;
+
+    std::cout << std::endl;
+
+    if (!is_greater_than(1.65, 1.66)) std::cout << "is_greater_than(a < b): OK" << std::endl;
+    else std::cout << "is_greater_than(a < b): ERROR" << std::endl;
+
+    if (!is_greater_than(1.65, 1.65)) std::cout << "is_greater_than(a = b): OK" << std::endl;
+    else std::cout << "is_greater_than(a = b): ERROR" << std::endl;
+
+    if (is_greater_than(1.65, 1.64)) std::cout << "is_greater_than(a > b): OK" << std::endl;
+    else std::cout << "is_greater_than(a > b): ERROR" << std::endl;
+
+    std::cout << std::endl;
+
+    if (is_greater_than_around(1.666, 1.655, 0.01)) std::cout << "is_greater_than_around(a < b): OK" << std::endl;
+    else std::cout << "is_greater_than_around(a < b): ERROR" << std::endl;
+
+    if (!is_greater_than_around(1.656, 1.655, 0.01)) std::cout << "is_greater_than_around(a ~= b): OK" << std::endl;
+    else std::cout << "is_greater_than_around(a ~= b): ERROR" << std::endl;
+}
+
 
 int main()
 {
@@ -735,4 +1304,8 @@ int main()
     basic_float_tests();
     std::cout << "Basic function tests (double):" << std::endl << std::endl;
     basic_double_tests();
+    std::cout << "Comparison function tests (float):" << std::endl << std::endl;
+    comparison_float_tests();
+    std::cout << "Comparison function tests (double):" << std::endl << std::endl;
+    comparison_double_tests();
 }

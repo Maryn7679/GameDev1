@@ -11,73 +11,59 @@ float absolute(float value) {
 float maximum(float a, float b)
 {
     if (is_nan(a) || is_nan(b)) { return a; }
+    if (is_zero(a) && is_zero(b)) return a;
+
+    if (is_signed(a) && !is_signed(b)) { return b; }
+    if (!is_signed(a) && is_signed(b)) { return a; }
+
     if (is_inf(a) || is_inf(b))
     {
         if (is_pos_inf(a)) return a;
         else return b;
     }
-    if (is_zero(a) && is_zero(b)) return a;
 
-    if (is_signed(a) && !is_signed(b)) { return b; }
-    if (!is_signed(a) && is_signed(b)) { return a; }
-    bool sign = is_signed(a);
+    if (a - b > 0) { return a; }
+    else return b;
+    //bool sign = is_signed(a);
 
-    a = absolute(a);
-    b = absolute(b);
-    uint32_t bit_a(to_bytes(a));
-    uint32_t bit_b(to_bytes(b));
+    //a = absolute(a);
+    //b = absolute(b);
+    //uint32_t bit_a(to_bytes(a));
+    //uint32_t bit_b(to_bytes(b));
 
-    uint32_t mask;
+    //uint32_t mask;
 
-    for (mask = 1 << 31; mask != 0; mask >>= 1) {
+    //for (mask = 1 << 31; mask != 0; mask >>= 1) {
 
-        if ((bit_a & mask) == (bit_b & mask)) {
-            continue;
-        }
-        else {
-            if ((bit_a & mask) && !sign) {
-                return a;
-            }
-            return b;
-        }
-    }
-    return a;
+    //    if ((bit_a & mask) == (bit_b & mask)) {
+    //        continue;
+    //    }
+    //    else {
+    //        if ((bit_a & mask) && !sign) {
+    //            return a;
+    //        }
+    //        return b;
+    //    }
+    //}
+    //return a;
 }
 
 float minimum(float a, float b)
 {
     if (is_nan(a) || is_nan(b)) { return a; }
+    if (is_zero(a) && is_zero(b)) return a;
+
+    if (is_signed(a) && !is_signed(b)) { return a; }
+    if (!is_signed(a) && is_signed(b)) { return b; }
+
     if (is_inf(a) || is_inf(b))
     {
         if (is_pos_inf(a)) return b;
         else return a;
     }
-    if (is_zero(a) && is_zero(b)) return a;
 
-    if (is_signed(a) && !is_signed(b)) { return a; }
-    if (!is_signed(a) && is_signed(b)) { return b; }
-    bool sign = is_signed(a);
-
-    a = absolute(a);
-    b = absolute(b);
-    uint32_t bit_a(to_bytes(a));
-    uint32_t bit_b(to_bytes(b));
-
-    uint32_t mask;
-
-    for (mask = 1 << 31; mask != 0; mask >>= 1) {
-
-        if ((bit_a & mask) == (bit_b & mask)) {
-            continue;
-        }
-        else {
-            if ((bit_a & mask) && !sign) {
-                return b;
-            }
-            return a;
-        }
-    }
-    return a;
+    if (a - b > 0) { return b; }
+    else return a;
 }
 
 float clamp(float k, float a, float b)
